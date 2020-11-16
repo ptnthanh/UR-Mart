@@ -1,0 +1,79 @@
+import os
+# Import the Flask module from the flask package
+from flask import Flask, render_template, request, session, redirect, url_for
+from flask_bootstrap import Bootstrap
+from flask_moment import Moment
+# from flask_wtf import FlaskForm
+# from wtforms import StringField, SubmitField, IntegerField, validators
+# from wtforms.validators import DataRequired
+from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
+from flask_migrate import Migrate
+
+basedir = os.path.abspath(os.path.dirname(__file__))
+
+# Instantiate the Flask class to the variable: app
+app = Flask(__name__)
+application = app
+app.config['SECRET_KEY'] = 'SECRET_KEY'
+app.config['SQLALCHEMY_DATABASE_URI'] =\
+    'sqlite:///' + os.path.join(basedir, 'data.sqlite')
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+bootstrap = Bootstrap(app)
+moment = Moment(app)
+db = SQLAlchemy(app)
+migrate = Migrate(app, db)
+
+class Products(db.Model):
+    __tablename__ = 'Products'
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(256), unique=True, nullable=False)
+    category = db.Column(db.String(64), nullable=False)
+    SKU = db.Column(db.String(64), nullable=False)
+    stockAmount = db.Column(db.Integer)
+    originalPrice = db.Column(db.Float)
+    imgLink = db.Column(db.String(256), unique=True, nullable=False)
+    dateAdded = db.Column(db.DateTime, default=datetime.now())
+   
+    def __repr__(self):
+        return '<Product %r>' % self.id
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
+
+
+@app.errorhandler(500)
+def internal_server_error(e):
+    return render_template('500.html'), 500
+
+# Create a "route" using a "decoration"
+@app.route('/', methods=['GET', 'POST'])
+# Create a Python function that will be executed at the decoration
+def index():
+	products = Products.query.order_by(Products.dateAdded)
+	return render_template('home.html', products=products)
+	
+
+@app.route('/create_items', methods=['GET', 'POST'])
+def create():
+	title = "Create Items (FOR TESTING)"
+	if request.method == "POST":
+		title = request.form['title']
+		category = request.form['category']
+		SKU = request.form['SKU']
+		amount = request.form['amount']
+		price = request.form['price']
+		link = request.form['link']
+		listing = Products(title=title, category=category, SKU=SKU, stockAmount=amount, originalPrice=price, imgLink=link)
+		try:
+			db.session.add(listing)
+			db.session.commit()
+			return redirect(url_for('create'))
+		except:
+			return "CANNOT ADD ITEMS!"
+	else:
+		return render_template('create.html', title=title)
+
+
