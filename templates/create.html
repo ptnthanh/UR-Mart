@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+<!-- {% import "bootstrap/wtf.html" as wtf %} -->
+{% block title %}Flasky{% endblock %}
+{% block page_content %}
+<div class="page-header">
+    <h1><b>Add Item (FOR TESTING)</b></h1>
+    <div class="container">
+    	<form action="{{url_for('create')}}" METHOD="POST">
+    		<div class="form-group">
+    			 <label for="title">Product Title: </label>
+    			 <input type="text" class="form-control" id="title" name="title" placeholder="Enter Product Title">
+    		</div>
+    		<div class="form-group">
+    			 <label for="category">Product Category: </label>
+    			 <input type="text" class="form-control" id="category" name="category" placeholder="Enter Product Category">
+    		</div>
+    		<div class="form-group">
+    			 <label for="SKU">SKU: </label>
+    			 <input type="text" class="form-control" id="SKU" name="SKU" placeholder="Enter SKU">
+    		</div>
+    		<div class="form-group">
+    			 <label for="amount">In Stock: </label>
+    			 <input type="number" class="form-control" id="amount" name="amount" placeholder="Enter Stock Amount">
+    		</div>
+    		<div class="form-group">
+    			 <label for="price">Original Price: </label>
+    			 <input type="number" step="any" class="form-control" id="price" name="price" placeholder="Enter Original Price">
+    		</div>
+    		<div class="form-group">
+    			 <label for="link">Image Link: </label>
+    			 <input type="text" class="form-control" id="link" name="link" placeholder="Enter Image Link">
+    		</div>
+    		<button type="submit" class="btn btn-primary">Submit</button>
+    	</form>
+    </div>
+</div>
+{% endblock %}
