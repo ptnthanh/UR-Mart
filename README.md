@@ -4,15 +4,15 @@
 We plan to build an online shopping application called UrMart, similar to Amazon or
 eBay. Our target audience are independent online merchants who sell products
 alongside customers who seek products unavailable on more popular sites.
-Our application will include these features listed below:
-● Using Flask as our web framework.
-● Deployed on Digital Scholars.
-● Product database with vital data (e.g. SKU, Brand Name, Origin, etc,...).
-● User Authentication for sellers and buyers.
+Our application will include these features listed below: <br>
+● Using Flask as our web framework.<br>
+● Deployed on Digital Scholars.<br>
+● Product database with vital data (e.g. SKU, Brand Name, Origin, etc,...).<br>
+● User Authentication for sellers and buyers.<br>
 ● Sellers can use CRUD functions on products (e.g. create new products, delete
-existing ones,...).
+existing ones,...).<br>
 ● Buyers can add items to cart, rate products, pay sellers through store credit (no
-REAL payment charged).
+REAL payment charged).<br>
 More features or functionalities might be added as we work on this project - all of which
 will be properly documented/reported.
 
