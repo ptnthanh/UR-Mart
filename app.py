@@ -30,11 +30,13 @@ class Products(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(256), unique=True, nullable=False)
     category = db.Column(db.String(64), nullable=False)
+    subcategory = db.Column(db.String(64), nullable=False)
     SKU = db.Column(db.String(64), nullable=False)
     stockAmount = db.Column(db.Integer)
     originalPrice = db.Column(db.Float)
     imgLink = db.Column(db.String(256), unique=True, nullable=False)
     dateAdded = db.Column(db.DateTime, default=datetime.now())
+    brand = db.Column(db.String(64))
    
     def __repr__(self):
         return '<Product %r>' % self.id
@@ -62,11 +64,13 @@ def create():
 	if request.method == "POST":
 		title = request.form['title']
 		category = request.form['category']
+		subcategory = request.form['subcategory']
 		SKU = request.form['SKU']
 		amount = request.form['amount']
 		price = request.form['price']
 		link = request.form['link']
-		listing = Products(title=title, category=category, SKU=SKU, stockAmount=amount, originalPrice=price, imgLink=link)
+		brand = request.form['brand']
+		listing = Products(title=title, category=category, SKU=SKU, stockAmount=amount, originalPrice=price, imgLink=link, brand=brand, subcategory=subcategory)
 		try:
 			db.session.add(listing)
 			db.session.commit()
