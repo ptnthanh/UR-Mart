@@ -1,6 +1,6 @@
 {% extends "bootstrap/base.html" %}
 
-{% block title %}UR Mart{% endblock %}
+{% block title %}Flasky{% endblock %}
 
 {% block head %}
 {{ super() }}
@@ -23,6 +23,8 @@
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li><a href="{{url_for('create')}}">Add Item</a></li>
+                <li><a href="{{url_for('computers')}}">Computers & Accessories</a></li>
+                <li><a href="{{url_for('headphones')}}">Headphones & Earbuds</a></li>
             </ul>
         </div>
     </div>
