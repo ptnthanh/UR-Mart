@@ -54,10 +54,45 @@ def internal_server_error(e):
 @app.route('/', methods=['GET', 'POST'])
 # Create a Python function that will be executed at the decoration
 def index():
-	products = Products.query.order_by(Products.dateAdded)
-	return render_template('home.html', products=products)
-	
+	filter_by = request.args.get("filter")
+	products = Products.query.order_by(Products.dateAdded.desc())
+	filter_label = "Newest"
+	if filter_by == "low_to_high":
+		products = Products.query.order_by(Products.originalPrice)
+		filter_label = "Price (Low to High)"
+	if filter_by == "high_to_low":
+		products = Products.query.order_by(Products.originalPrice.desc())
+		filter_label = "Price (High to Low)"
+	return render_template('home.html', function='index', products=products, filter_by=filter_by, filter_label=filter_label)
 
+@app.route('/computers_&_accessories', methods=['GET', 'POST'])
+# Create a Python function that will be executed at the decoration
+def computers():
+	filter_by = request.args.get("filter")
+	products = Products.query.filter_by(category='Computers & Accessories').order_by(Products.dateAdded.desc())
+	filter_label = "Newest"
+	if filter_by == "low_to_high":
+		products = Products.query.filter_by(category='Computers & Accessories').order_by(Products.originalPrice)
+		filter_label = "Price (Low to High)"
+	if filter_by == "high_to_low":
+		products = Products.query.filter_by(category='Computers & Accessories').order_by(Products.originalPrice.desc())
+		filter_label = "Price (High to Low)"
+	return render_template('home.html', function = 'computers', products=products, filter_by=filter_by, filter_label=filter_label)
+
+@app.route('/headphones_&_earbuds', methods=['GET', 'POST'])
+# Create a Python function that will be executed at the decoration
+def headphones():
+	filter_by = request.args.get("filter")
+	products = Products.query.filter_by(category='Headphones & Earbuds').order_by(Products.dateAdded.desc())
+	filter_label = "Newest"
+	if filter_by == "low_to_high":
+		products = Products.query.filter_by(category='Headphones & Earbuds').order_by(Products.originalPrice)
+		filter_label = "Price (Low to High)"
+	if filter_by == "high_to_low":
+		products = Products.query.filter_by(category='Headphones & Earbuds').order_by(Products.originalPrice.desc())
+		filter_label = "Price (High to Low)"
+	return render_template('home.html', function = 'headphones', products=products, filter_by=filter_by, filter_label=filter_label)
+	
 @app.route('/create_items', methods=['GET', 'POST'])
 def create():
 	title = "Create Items (FOR TESTING)"
