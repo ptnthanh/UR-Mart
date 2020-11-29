@@ -1,15 +1,13 @@
 {% extends "base.html" %}
-{% block title %}Flasky{% endblock %}
+
+{% block head %}
+{{ super() }}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='scripts.js') }}"></script>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}"/>
+{% endblock %}
+
 {% block page_content %}
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<script type="text/javascript"
-         src="{{ url_for('static', filename='scripts.js') }}">
-    </script>
-	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}"/>
-</head>
 <div class="page-header">
 	<div class="jumbotron">
 		<h1>Welcome to UR-Mart!</h1>
@@ -32,7 +30,7 @@
 <div class="container">
 	<div class="row">
 		{% for product in products %}
-		<div class="col-md-3">
+		<div class="col-md-4">
 			<div class="thumbnail">
 				<img src="{{product.imgLink}}" style="width:350px;height:250px;">
 				<div class="caption">
