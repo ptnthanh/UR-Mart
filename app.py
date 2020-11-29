@@ -1,50 +1,14 @@
-import os
 # Import the Flask module from the flask package
-from flask import Flask, render_template, request, session, redirect, url_for
-from flask_bootstrap import Bootstrap
-from flask_moment import Moment
-# from flask_wtf import FlaskForm
-# from wtforms import StringField, SubmitField, IntegerField, validators
-# from wtforms.validators import DataRequired
-from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime
-from flask_migrate import Migrate
+from flask import Flask, Blueprint, render_template, request, session, redirect, url_for
+from .models import Products
 
-basedir = os.path.abspath(os.path.dirname(__file__))
+from flask_login import login_required
 
-# Instantiate the Flask class to the variable: app
-app = Flask(__name__)
-application = app
-app.config['SECRET_KEY'] = 'SECRET_KEY'
-app.config['SQLALCHEMY_DATABASE_URI'] =\
-    'sqlite:///' + os.path.join(basedir, 'data.sqlite')
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-bootstrap = Bootstrap(app)
-moment = Moment(app)
-db = SQLAlchemy(app)
-migrate = Migrate(app, db)
-
-class Products(db.Model):
-    __tablename__ = 'Products'
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(256), unique=True, nullable=False)
-    category = db.Column(db.String(64), nullable=False)
-    subcategory = db.Column(db.String(64), nullable=False)
-    SKU = db.Column(db.String(64), nullable=False)
-    stockAmount = db.Column(db.Integer)
-    originalPrice = db.Column(db.Float)
-    imgLink = db.Column(db.String(256), unique=True, nullable=False)
-    dateAdded = db.Column(db.DateTime, default=datetime.now())
-    brand = db.Column(db.String(64))
-   
-    def __repr__(self):
-        return '<Product %r>' % self.id
+app = Blueprint('app', __name__)
 
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
-
 
 @app.errorhandler(500)
 def internal_server_error(e):
@@ -63,7 +27,7 @@ def index():
 	if filter_by == "high_to_low":
 		products = Products.query.order_by(Products.originalPrice.desc())
 		filter_label = "Price (High to Low)"
-	return render_template('home.html', function='index', products=products, filter_by=filter_by, filter_label=filter_label)
+	return render_template('home.html', function='app.index', products=products, filter_by=filter_by, filter_label=filter_label)
 
 @app.route('/computers_&_accessories', methods=['GET', 'POST'])
 # Create a Python function that will be executed at the decoration
@@ -77,7 +41,7 @@ def computers():
 	if filter_by == "high_to_low":
 		products = Products.query.filter_by(category='Computers & Accessories').order_by(Products.originalPrice.desc())
 		filter_label = "Price (High to Low)"
-	return render_template('home.html', function = 'computers', products=products, filter_by=filter_by, filter_label=filter_label)
+	return render_template('home.html', function = 'app.computers', products=products, filter_by=filter_by, filter_label=filter_label)
 
 @app.route('/headphones_&_earbuds', methods=['GET', 'POST'])
 # Create a Python function that will be executed at the decoration
@@ -91,9 +55,10 @@ def headphones():
 	if filter_by == "high_to_low":
 		products = Products.query.filter_by(category='Headphones & Earbuds').order_by(Products.originalPrice.desc())
 		filter_label = "Price (High to Low)"
-	return render_template('home.html', function = 'headphones', products=products, filter_by=filter_by, filter_label=filter_label)
-	
+	return render_template('home.html', function = 'app.headphones', products=products, filter_by=filter_by, filter_label=filter_label)
+
 @app.route('/create_items', methods=['GET', 'POST'])
+@login_required
 def create():
 	title = "Create Items (FOR TESTING)"
 	if request.method == "POST":
@@ -109,10 +74,8 @@ def create():
 		try:
 			db.session.add(listing)
 			db.session.commit()
-			return redirect(url_for('create'))
+			return redirect(url_for('app.create'))
 		except:
 			return "CANNOT ADD ITEMS!"
 	else:
 		return render_template('create.html', title=title)
-
-
