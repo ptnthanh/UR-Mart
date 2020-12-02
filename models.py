@@ -19,6 +19,7 @@ class Products(db.Model):
     imgLink = db.Column(db.String(256), unique=True, nullable=False)
     dateAdded = db.Column(db.DateTime, default=datetime.now())
     brand = db.Column(db.String(64))
+    description = db.Column(db.Text, nullable=False)
 
     def __repr__(self):
         return '<Product %r>' % self.id

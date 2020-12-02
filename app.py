@@ -1,7 +1,7 @@
 # Import the Flask module from the flask package
 from flask import Flask, Blueprint, render_template, request, session, redirect, url_for
 from .models import Products
-
+from . import db
 from flask_login import login_required
 
 app = Blueprint('app', __name__)
@@ -60,7 +60,6 @@ def headphones():
 @app.route('/create_items', methods=['GET', 'POST'])
 @login_required
 def create():
-	title = "Create Items (FOR TESTING)"
 	if request.method == "POST":
 		title = request.form['title']
 		category = request.form['category']
@@ -70,12 +69,55 @@ def create():
 		price = request.form['price']
 		link = request.form['link']
 		brand = request.form['brand']
-		listing = Products(title=title, category=category, SKU=SKU, stockAmount=amount, originalPrice=price, imgLink=link, brand=brand, subcategory=subcategory)
+		description = request.form['description']
+		listing = Products(title=title, category=category, SKU=SKU, stockAmount=amount, originalPrice=price, imgLink=link, brand=brand, subcategory=subcategory, description=description)
 		try:
 			db.session.add(listing)
 			db.session.commit()
 			return redirect(url_for('app.create'))
 		except:
-			return "CANNOT ADD ITEMS!"
+			return render_template('error.html')
 	else:
-		return render_template('create.html', title=title)
+		return render_template('create.html')
+
+@app.route('/update_items', methods=['GET', 'POST'])
+@login_required
+def table():
+	products = Products.query.order_by(Products.id)
+	return render_template('table.html', products=products)
+
+@app.route('/delete/<int:id>', methods=['GET', 'POST'])
+@login_required
+def delete(id):
+	delete = Products.query.get_or_404(id)
+	try:
+		db.session.delete(delete)
+		db.session.commit()
+		return redirect(url_for('app.table'))
+	except:
+		return render_template('error.html')
+
+@app.route('/update/<int:id>', methods=['GET', 'POST'])
+@login_required
+def update(id):
+	update = Products.query.get_or_404(id)
+	if request.method == "POST":
+		try:
+			update.title = request.form['title']
+			update.category = request.form['category']
+			update.subcategory = request.form['subcategory']
+			update.SKU = request.form['SKU']
+			update.stockAmount = request.form['amount']
+			update.originalPrice = request.form['price']
+			update.imgLink = request.form['link']
+			update.brand = request.form['brand']
+			update.description = request.form['description']
+			db.session.commit()
+			return redirect(url_for('app.table'))
+		except:
+			return render_template('error.html')
+	else:
+		return render_template('update.html', update=update)
+
+
+

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block page_content %}
+<div class="page-header">
+    <a href="{{url_for('app.create')}}" class="btn btn-info">Add New Listing</a>
+    <br><br>
+    <table style="width: 100%; table-layout: fixed; " id="ProductTable">
+        <tr style="border: 1px solid black; border-collapse: collapse;">
+            <th><b>ID</b></th>
+            <th><b>SKU</b></th>
+            <th><b>Product</b></th>
+            <th></th>
+            <th></th>
+        </tr>
+        {% for product in products %}
+        <tr style="border: 1px solid black; border-collapse: collapse;">
+            <td><b>{{product.id}}</b></td>
+            <td>{{product.SKU}}</td>
+            <td>{{product.title}}</td>
+            <td style="text-align: center"><a href="{{url_for('app.update', id=product.id)}}" class="btn btn-primary btn-small">Update</a></td>
+            <td style="text-align: center"><a href="{{url_for('app.delete', id=product.id)}}" class="btn btn-danger btn-small">Delete</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}
