@@ -18,44 +18,194 @@ def internal_server_error(e):
 @app.route('/', methods=['GET', 'POST'])
 # Create a Python function that will be executed at the decoration
 def index():
-	filter_by = request.args.get("filter")
+	filter_by = "Newest"
+	brand = "All"
+	filters = ["Newest", "Price (Low to High)", "Price (High to Low)"]
+	filters.sort()
 	products = Products.query.order_by(Products.dateAdded.desc())
-	filter_label = "Newest"
-	if filter_by == "low_to_high":
-		products = Products.query.order_by(Products.originalPrice)
-		filter_label = "Price (Low to High)"
-	if filter_by == "high_to_low":
-		products = Products.query.order_by(Products.originalPrice.desc())
-		filter_label = "Price (High to Low)"
-	return render_template('home.html', function='app.index', products=products, filter_by=filter_by, filter_label=filter_label)
+	brands = Products.query.with_entities(Products.brand).distinct()
+	brands = [i[0] for i in brands]
+	brands.sort()
+	if request.method == "POST":
+		filter_by = request.form['filter']
+		brand = request.form['brand']
+	if filter_by == "Newest":
+		if brand != "All": products = Products.query.filter_by(brand=brand).order_by(Products.dateAdded.desc())
+	elif filter_by == "Price (Low to High)":
+		if brand != "All": products = Products.query.filter_by(brand=brand).order_by(Products.originalPrice)
+		else: products = Products.query.order_by(Products.originalPrice)
+	elif filter_by == "Price (High to Low)":
+		if brand != "All": products = Products.query.filter_by(brand=brand).order_by(Products.originalPrice.desc())
+		else: products = Products.query.order_by(Products.originalPrice.desc())
+	return render_template('home.html', function='app.index', products=products, brands=brands, filters=filters, filter_by=filter_by, brand=brand)
 
 @app.route('/computers_&_accessories', methods=['GET', 'POST'])
 # Create a Python function that will be executed at the decoration
 def computers():
-	filter_by = request.args.get("filter")
-	products = Products.query.filter_by(category='Computers & Accessories').order_by(Products.dateAdded.desc())
-	filter_label = "Newest"
-	if filter_by == "low_to_high":
-		products = Products.query.filter_by(category='Computers & Accessories').order_by(Products.originalPrice)
-		filter_label = "Price (Low to High)"
-	if filter_by == "high_to_low":
-		products = Products.query.filter_by(category='Computers & Accessories').order_by(Products.originalPrice.desc())
-		filter_label = "Price (High to Low)"
-	return render_template('home.html', function = 'app.computers', products=products, filter_by=filter_by, filter_label=filter_label)
+	filter_by = "Newest"
+	brand = "All"
+	filters = ["Newest", "Price (Low to High)", "Price (High to Low)"]
+	filters.sort()
+	products = Products.query.filter_by(category="Computers & Accessories").order_by(Products.dateAdded.desc())
+	brands = Products.query.filter_by(category="Computers & Accessories").with_entities(Products.brand).distinct()
+	brands = [i[0] for i in brands]
+	brands.sort()
+	if request.method == "POST":
+		filter_by = request.form['filter']
+		brand = request.form['brand']
+	if filter_by == "Newest":
+		if brand != "All": products = Products.query.filter_by(category="Computers & Accessories", brand=brand).order_by(Products.dateAdded.desc())
+	elif filter_by == "Price (Low to High)":
+		if brand != "All": products = Products.query.filter_by(category="Computers & Accessories", brand=brand).order_by(Products.originalPrice)
+		else: products = Products.query.filter_by(category="Computers & Accessories").order_by(Products.originalPrice)
+	elif filter_by == "Price (High to Low)":
+		if brand != "All": products = Products.query.filter_by(category="Computers & Accessories", brand=brand).order_by(Products.originalPrice.desc())
+		else: products = Products.query.filter_by(category="Computers & Accessories").order_by(Products.originalPrice.desc())
+	return render_template('home.html', function='app.computers', products=products, brands=brands, filters=filters, filter_by=filter_by, brand=brand)
+
+@app.route('/computers_&_accessories/gaming_laptops', methods=['GET', 'POST'])
+# Create a Python function that will be executed at the decoration
+def glaptops():
+	filter_by = "Newest"
+	brand = "All"
+	filters = ["Newest", "Price (Low to High)", "Price (High to Low)"]
+	filters.sort()
+	products = Products.query.filter_by(subcategory="Gaming Laptop").order_by(Products.dateAdded.desc())
+	brands = Products.query.filter_by(subcategory="Gaming Laptop").with_entities(Products.brand).distinct()
+	brands = [i[0] for i in brands]
+	brands.sort()
+	if request.method == "POST":
+		filter_by = request.form['filter']
+		brand = request.form['brand']
+	if filter_by == "Newest":
+		if brand != "All": products = Products.query.filter_by(subcategory="Gaming Laptop", brand=brand).order_by(Products.dateAdded.desc())
+	elif filter_by == "Price (Low to High)":
+		if brand != "All": products = Products.query.filter_by(subcategory="Gaming Laptop", brand=brand).order_by(Products.originalPrice)
+		else: products = Products.query.filter_by(subcategory="Gaming Laptop").order_by(Products.originalPrice)
+	elif filter_by == "Price (High to Low)":
+		if brand != "All": products = Products.query.filter_by(subcategory="Gaming Laptop", brand=brand).order_by(Products.originalPrice.desc())
+		else: products = Products.query.filter_by(subcategory="Gaming Laptop").order_by(Products.originalPrice.desc())
+	return render_template('home.html', function='app.glaptops', products=products, brands=brands, filters=filters, filter_by=filter_by, brand=brand)
+
+@app.route('/computers_&_accessories/laptops', methods=['GET', 'POST'])
+# Create a Python function that will be executed at the decoration
+def laptops():
+	filter_by = "Newest"
+	brand = "All"
+	filters = ["Newest", "Price (Low to High)", "Price (High to Low)"]
+	filters.sort()
+	products = Products.query.filter_by(subcategory="Laptop").order_by(Products.dateAdded.desc())
+	brands = Products.query.filter_by(subcategory="Laptop").with_entities(Products.brand).distinct()
+	brands = [i[0] for i in brands]
+	brands.sort()
+	if request.method == "POST":
+		filter_by = request.form['filter']
+		brand = request.form['brand']
+	if filter_by == "Newest":
+		if brand != "All": products = Products.query.filter_by(subcategory="Laptop", brand=brand).order_by(Products.dateAdded.desc())
+	elif filter_by == "Price (Low to High)":
+		if brand != "All": products = Products.query.filter_by(subcategory="Laptop", brand=brand).order_by(Products.originalPrice)
+		else: products = Products.query.filter_by(subcategory="Laptop").order_by(Products.originalPrice)
+	elif filter_by == "Price (High to Low)":
+		if brand != "All": products = Products.query.filter_by(subcategory="Laptop", brand=brand).order_by(Products.originalPrice.desc())
+		else: products = Products.query.filter_by(subcategory="Laptop").order_by(Products.originalPrice.desc())
+	return render_template('home.html', function='app.laptops', products=products, brands=brands, filters=filters, filter_by=filter_by, brand=brand)
+
+@app.route('/computers_&_accessories/computer_accessory', methods=['GET', 'POST'])
+# Create a Python function that will be executed at the decoration
+def accessories():
+	filter_by = "Newest"
+	brand = "All"
+	filters = ["Newest", "Price (Low to High)", "Price (High to Low)"]
+	filters.sort()
+	products = Products.query.filter_by(subcategory="Computer Accessory").order_by(Products.dateAdded.desc())
+	brands = Products.query.filter_by(subcategory="Computer Accessory").with_entities(Products.brand).distinct()
+	brands = [i[0] for i in brands]
+	brands.sort()
+	if request.method == "POST":
+		filter_by = request.form['filter']
+		brand = request.form['brand']
+	if filter_by == "Newest":
+		if brand != "All": products = Products.query.filter_by(subcategory="Computer Accessory", brand=brand).order_by(Products.dateAdded.desc())
+	elif filter_by == "Price (Low to High)":
+		if brand != "All": products = Products.query.filter_by(subcategory="Computer Accessory", brand=brand).order_by(Products.originalPrice)
+		else: products = Products.query.filter_by(subcategory="Computer Accessory").order_by(Products.originalPrice)
+	elif filter_by == "Price (High to Low)":
+		if brand != "All": products = Products.query.filter_by(subcategory="Computer Accessory", brand=brand).order_by(Products.originalPrice.desc())
+		else: products = Products.query.filter_by(subcategory="Computer Accessory").order_by(Products.originalPrice.desc())
+	return render_template('home.html', function='app.accessories', products=products, brands=brands, filters=filters, filter_by=filter_by, brand=brand)		
+
+@app.route('/headphones_&_earbuds/headphones', methods=['GET', 'POST'])
+# Create a Python function that will be executed at the decoration
+def headphones():
+	filter_by = "Newest"
+	brand = "All"
+	filters = ["Newest", "Price (Low to High)", "Price (High to Low)"]
+	filters.sort()
+	products = Products.query.filter_by(subcategory="Headphones").order_by(Products.dateAdded.desc())
+	brands = Products.query.filter_by(subcategory="Headphones").with_entities(Products.brand).distinct()
+	brands = [i[0] for i in brands]
+	brands.sort()
+	if request.method == "POST":
+		filter_by = request.form['filter']
+		brand = request.form['brand']
+	if filter_by == "Newest":
+		if brand != "All": products = Products.query.filter_by(subcategory="Headphones", brand=brand).order_by(Products.dateAdded.desc())
+	elif filter_by == "Price (Low to High)":
+		if brand != "All": products = Products.query.filter_by(subcategory="Headphones", brand=brand).order_by(Products.originalPrice)
+		else: products = Products.query.filter_by(subcategory="Headphones").order_by(Products.originalPrice)
+	elif filter_by == "Price (High to Low)":
+		if brand != "All": products = Products.query.filter_by(subcategory="Headphones", brand=brand).order_by(Products.originalPrice.desc())
+		else: products = Products.query.filter_by(subcategory="Headphones").order_by(Products.originalPrice.desc())
+	return render_template('home.html', function='app.headphones', products=products, brands=brands, filters=filters, filter_by=filter_by, brand=brand)
+
+@app.route('/headphones_&_earbuds/earbuds', methods=['GET', 'POST'])
+# Create a Python function that will be executed at the decoration
+def earbuds():
+	filter_by = "Newest"
+	brand = "All"
+	filters = ["Newest", "Price (Low to High)", "Price (High to Low)"]
+	filters.sort()
+	products = Products.query.filter_by(subcategory="Earbuds").order_by(Products.dateAdded.desc())
+	brands = Products.query.filter_by(subcategory="Earbuds").with_entities(Products.brand).distinct()
+	brands = [i[0] for i in brands]
+	brands.sort()
+	if request.method == "POST":
+		filter_by = request.form['filter']
+		brand = request.form['brand']
+	if filter_by == "Newest":
+		if brand != "All": products = Products.query.filter_by(subcategory="Earbuds", brand=brand).order_by(Products.dateAdded.desc())
+	elif filter_by == "Price (Low to High)":
+		if brand != "All": products = Products.query.filter_by(subcategory="Earbuds", brand=brand).order_by(Products.originalPrice)
+		else: products = Products.query.filter_by(subcategory="Earbuds").order_by(Products.originalPrice)
+	elif filter_by == "Price (High to Low)":
+		if brand != "All": products = Products.query.filter_by(subcategory="Earbuds", brand=brand).order_by(Products.originalPrice.desc())
+		else: products = Products.query.filter_by(subcategory="Earbuds").order_by(Products.originalPrice.desc())
+	return render_template('home.html', function='app.earbuds', products=products, brands=brands, filters=filters, filter_by=filter_by, brand=brand)
 
 @app.route('/headphones_&_earbuds', methods=['GET', 'POST'])
 # Create a Python function that will be executed at the decoration
-def headphones():
-	filter_by = request.args.get("filter")
-	products = Products.query.filter_by(category='Headphones & Earbuds').order_by(Products.dateAdded.desc())
-	filter_label = "Newest"
-	if filter_by == "low_to_high":
-		products = Products.query.filter_by(category='Headphones & Earbuds').order_by(Products.originalPrice)
-		filter_label = "Price (Low to High)"
-	if filter_by == "high_to_low":
-		products = Products.query.filter_by(category='Headphones & Earbuds').order_by(Products.originalPrice.desc())
-		filter_label = "Price (High to Low)"
-	return render_template('home.html', function = 'app.headphones', products=products, filter_by=filter_by, filter_label=filter_label)
+def earphones():
+	filter_by = "Newest"
+	brand = "All"
+	filters = ["Newest", "Price (Low to High)", "Price (High to Low)"]
+	filters.sort()
+	products = Products.query.filter_by(category="Headphones & Earbuds").order_by(Products.dateAdded.desc())
+	brands = Products.query.filter_by(category="Headphones & Earbuds").with_entities(Products.brand).distinct()
+	brands = [i[0] for i in brands]
+	brands.sort()
+	if request.method == "POST":
+		filter_by = request.form['filter']
+		brand = request.form['brand']
+	if filter_by == "Newest":
+		if brand != "All": products = Products.query.filter_by(category="Headphones & Earbuds", brand=brand).order_by(Products.dateAdded.desc())
+	elif filter_by == "Price (Low to High)":
+		if brand != "All": products = Products.query.filter_by(category="Headphones & Earbuds", brand=brand).order_by(Products.originalPrice)
+		else: products = Products.query.filter_by(category="Headphones & Earbuds").order_by(Products.originalPrice)
+	elif filter_by == "Price (High to Low)":
+		if brand != "All": products = Products.query.filter_by(category="Headphones & Earbuds", brand=brand).order_by(Products.originalPrice.desc())
+		else: products = Products.query.filter_by(category="Headphones & Earbuds").order_by(Products.originalPrice.desc())
+	return render_template('home.html', function='app.earphones', products=products, brands=brands, filters=filters, filter_by=filter_by, brand=brand)
 
 @app.route('/create_items', methods=['GET', 'POST'])
 @login_required
@@ -74,7 +224,7 @@ def create():
 		try:
 			db.session.add(listing)
 			db.session.commit()
-			return redirect(url_for('app.create'))
+			return redirect(url_for('app.table'))
 		except:
 			return render_template('error.html')
 	else:
@@ -83,13 +233,17 @@ def create():
 @app.route('/update_items', methods=['GET', 'POST'])
 @login_required
 def table():
+	search = ""
 	products = Products.query.order_by(Products.id)
+	if request.method == "POST":
+		search = request.form['search']
+		products = Products.query.filter(Products.title.contains(search)).order_by(Products.id)
 	return render_template('table.html', products=products)
 
-@app.route('/delete/<int:id>', methods=['GET', 'POST'])
+@app.route('/delete/<string:SKU>', methods=['GET', 'POST'])
 @login_required
-def delete(id):
-	delete = Products.query.get_or_404(id)
+def delete(SKU):
+	delete = Products.query.filter_by(SKU=SKU).first()
 	try:
 		db.session.delete(delete)
 		db.session.commit()
@@ -97,10 +251,10 @@ def delete(id):
 	except:
 		return render_template('error.html')
 
-@app.route('/update/<int:id>', methods=['GET', 'POST'])
+@app.route('/update/<string:SKU>', methods=['GET', 'POST'])
 @login_required
-def update(id):
-	update = Products.query.get_or_404(id)
+def update(SKU):
+	update = Products.query.filter_by(SKU=SKU).first()
 	if request.method == "POST":
 		try:
 			update.title = request.form['title']
@@ -119,5 +273,9 @@ def update(id):
 	else:
 		return render_template('update.html', update=update)
 
+@app.route('/item/<string:SKU>', methods=['GET', 'POST'])
+def item(SKU):
+	item = Products.query.filter_by(SKU=SKU).first()
+	return render_template('item.html', item=item)
 
 

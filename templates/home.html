@@ -2,12 +2,19 @@
 
 {% block head %}
 {{ super() }}
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='scripts.js') }}"></script>
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}"/>
 {% endblock %}
 
 {% block page_content %}
+<style>
+	.caption {
+		position: relative;
+		display: block;
+		border-bottom: 1px solid black;
+		white-space: nowrap; 
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+</style>
 <div class="page-header">
 	<div class="jumbotron">
 		<h1>Welcome to UR-Mart!</h1>
@@ -15,16 +22,35 @@
 		<p><a class="btn btn-primary btn-lg">Learn More</a></p>
 	</div>
 </div>
-<div class="dropdown">
-	<button class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sort By: {{filter_label}} <span class="caret"></span>
-	</button>
-	<div class="dropdown-menu">
-		<a class="dropdown-item" href="{{url_for(function, filter='new')}}">Newest</a>
-		<br>
-		<a class="dropdown-item" href="{{url_for(function, filter='low_to_high')}}">Price (Low to High)</a>
-		<br>
-		<a class="dropdown-item" href="{{url_for(function, filter='high_to_low')}}">Price (High to Low)</a>
-	</div>
+<div class="container">
+	<form action="{{url_for(function)}}" class="form-inline" METHOD="POST">
+		<div class="form-group">
+			<label for="filter">Sort By: </label>
+			<select style="width:200px;" selected="{{filter_by}}" class="form-control" id="filter" name="filter">
+				<option>{{filter_by}}</option>
+				{% for filter in filters %}
+				{% if filter != filter_by  %}
+				<option>{{filter}}</option>
+				{% endif %}
+				{% endfor %}
+			</select>
+		</div>
+		<div class="form-group">
+			<label for="brand" style="margin-left:25px;">Brand: </label>
+			<select style="width:200px;" selected="{{brand}}" class="form-control" id="brand" name="brand">
+				<option>{{brand}}</option>
+				{% if brand != "All"  %}
+				<option>All</option>
+				{% endif %}
+				{% for item in brands %}
+				{% if item != brand  %}
+				<option>{{item}}</option>
+				{% endif %}
+				{% endfor %}
+			</select>
+		</div>
+		<button type="submit" class="btn btn-primary">Submit</button>
+	</form>
 </div>
 <br>
 <div class="container">
@@ -41,7 +67,7 @@
 					<a href="#" class="btn btn-primary">
 						<span class="glyphicon glyphicon-shopping-cart"></span>	<b>Add To Cart</b>
 					</a>
-					<a href="#" class="btn btn-default">
+					<a href="{{url_for('app.item', SKU=product.SKU)}}" class="btn btn-default">
 						<span class="glyphicon glyphicon-th-list"></span>	<b>Details</b>
 					</a>
 				</p>

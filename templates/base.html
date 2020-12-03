@@ -9,36 +9,59 @@
 {% endblock %}
 
 {% block navbar %}
+<style>
+  .dropdown:hover .dropdown-menu {
+   display: block !important;
+ }
+
+ .dropdown-menu {
+  min-width: 0;
+  width: 100%;
+}
+</style>
 <div class="navbar navbar-inverse" role="navigation">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="{{url_for('app.index')}}">Home</a>
-        </div>
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-              <li><a href="{{url_for('app.computers')}}">Computers & Accessories</a></li>
-              <li><a href="{{url_for('app.headphones')}}">Headphones & Earbuds</a></li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-              <li><a href="{{url_for('app.table')}}">Update Item</a></li>
-              <li><a href="{{url_for('auth.signup')}}">Sign Up</a></li>
-              <li><a href="{{url_for('auth.login')}}">Log In</a></li>
-              <li><a href="{{url_for('auth.logout')}}">Log Out</a></li>
-            </ul>
-        </div>
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="{{url_for('app.index')}}">Home</a>
     </div>
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class=dropdown>
+          <a href="{{url_for('app.computers')}}" class="dropdown-toggle">Computers & Accessories <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{{url_for('app.glaptops')}}">Gaming Laptops</a></li>
+            <li><a class="dropdown-item" href="{{url_for('app.laptops')}}">Laptops</a></li>
+            <li><a class="dropdown-item" href="{{url_for('app.accessories')}}">Computer Accessories</a></li>
+          </ul>
+        </li>
+        <li class=dropdown>
+          <a href="{{url_for('app.earphones')}}">Headphones & Earbuds <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{{url_for('app.headphones')}}">Headphones</a></li>
+            <li><a class="dropdown-item" href="{{url_for('app.earbuds')}}">Earbuds</a></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="{{url_for('app.table')}}">Update Item</a></li>
+        <li><a href="{{url_for('auth.signup')}}">Sign Up</a></li>
+        <li><a href="{{url_for('auth.login')}}">Log In</a></li>
+        <li><a href="{{url_for('auth.logout')}}">Log Out</a></li>
+      </ul>
+    </div>
+  </div>
 </div>
 {% endblock %}
 
 {% block content %}
 <div class="container">
-    {% block page_content %}{% endblock %}
+  {% block page_content %}{% endblock %}
 </div>
 {% endblock %}
 
