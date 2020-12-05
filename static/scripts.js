@@ -32,12 +32,20 @@ function purchaseClicked() {
     while (cartItems.hasChildNodes()) {
         cartItems.removeChild(cartItems.firstChild)
     }
+
+    var cartCount = document.getElementById('cart-count')
+    cartCount.innerText = 0
+
     updateCartTotal()
 }
 
 function removeCartItem(event) {
     var buttonClicked = event.target
     buttonClicked.parentElement.parentElement.remove()
+
+    var cartCount = document.getElementById('cart-count')
+    cartCount.innerText = parseInt(cartCount.innerText) - 1
+
     updateCartTotal()
 }
 
@@ -70,6 +78,10 @@ function addItemToCart(title, price, imageSrc) {
             return
         }
     }
+
+    var cartCount = document.getElementById('cart-count')
+    cartCount.innerText = parseInt(cartCount.innerText) + 1
+
     var cartRowContents = `
         <div class="cart-item cart-column">
             <img class="cart-item-image" src="${imageSrc}" width="100" height="100">

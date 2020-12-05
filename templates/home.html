@@ -15,7 +15,26 @@
 		overflow: hidden;
 		text-overflow: ellipsis;
 	}
+
+	#floating-cart {
+    width: 80px;
+    height: 80px;
+    font-size: 20px;
+    color: red;
+    position: fixed;
+    border-radius: 50%;
+    right: 20px;
+    bottom: 50%;
+}
 </style>
+
+<a href="#cart">
+	<button id="floating-cart">
+		<span class="glyphicon glyphicon-shopping-cart"></span>
+		<b id="cart-count">0</b>
+	</button>
+</a>
+
 <div class="page-header">
 	<div class="jumbotron jumbotron-fluid">
 		<h1>Welcome to UR-Mart!</h1>
@@ -75,7 +94,7 @@
 	</div>
 </div>
 
-<section class="container content-section">
+<section id="cart" class="container content-section">
 	<h1 class="section-header">CART</h1>
 	<div class="cart-row">
 		<span class="cart-item cart-header cart-column">ITEM</span>
