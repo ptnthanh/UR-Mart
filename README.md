@@ -25,8 +25,6 @@ All of us will work together on front-end as well as user authentication.
 Changes to work assignment might happen as we work on this project - all of which will
 be properly documented/reported.
 
-Changelog: <br>
-● 11/16/2020: Initial commit. Basic front-end designed. Have a simple form to add a new listing. Database had these following fields: title, category, original price, SKU (Stock Keeping Unit), stock amount, link to image. <br>
-● 11/17/2020: Database structure updated: now there are a subcategory & a brand field. Form is modified accordingly. 
+
 
 
