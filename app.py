@@ -156,7 +156,7 @@ def accessories():
 	elif filter_by == "Price (High to Low)":
 		if brand != "All": products = Products.query.filter_by(subcategory="Computer Accessory", brand=brand).order_by(Products.originalPrice.desc()).all()
 		else: products = Products.query.filter_by(subcategory="Computer Accessory").order_by(Products.originalPrice.desc()).all()
-	return render_template('home.html', function='app.accessories', products=products, brands=brands, filters=filters, filter_by=filter_by, brand=brand)		
+	return render_template('home.html', function='app.accessories', products=products, brands=brands, filters=filters, filter_by=filter_by, brand=brand)
 
 @app.route('/headphones_&_earbuds/headphones', methods=['GET', 'POST'])
 # Create a Python function that will be executed at the decoration
@@ -306,5 +306,3 @@ def item(SKU):
 	subcategory = get_subcategory_func(item.subcategory)
 	strings = item.description.split("(*)")
 	return render_template('item.html', item=item, category=category, subcategory=subcategory, strings=strings)
-
-
