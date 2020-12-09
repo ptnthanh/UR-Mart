@@ -2,32 +2,10 @@
 
 {% block head %}
 {{ super() }}
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+
 {% endblock %}
 
 {% block page_content %}
-<style>
-	.caption {
-		position: relative;
-		display: block;
-		border-bottom: 1px solid black;
-		white-space: nowrap; 
-		overflow: hidden;
-		text-overflow: ellipsis;
-	}
-
-	#floating-cart {
-    width: 80px;
-    height: 80px;
-    font-size: 20px;
-    color: red;
-    position: fixed;
-    border-radius: 50%;
-    right: 20px;
-    bottom: 50%;
-}
-</style>
-
 <a href="#cart">
 	<button id="floating-cart">
 		<span class="glyphicon glyphicon-shopping-cart"></span>
@@ -38,7 +16,6 @@
 <div class="page-header">
 	<div class="jumbotron jumbotron-fluid">
 		<h1>Welcome to UR-Mart!</h1>
-		<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio, error sequi labore accusantium facilis architecto eligendi minus ad, a exercitationem eos ab earum! Quae debitis velit dolorem eaque quod omnis.</p>
 	</div>
 </div>
 <div class="container">

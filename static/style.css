@@ -99,3 +99,32 @@
     margin: 40px auto 80px auto;
     font-size: 1.75em;
 }
+
+.dropdown:hover .dropdown-menu {
+  display: block !important;
+}
+
+.dropdown-menu {
+  min-width: 0;
+  width: 100%;
+}
+
+.caption {
+  position: relative;
+  display: block;
+  border-bottom: 1px solid black;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#floating-cart {
+  width: 80px;
+  height: 80px;
+  font-size: 20px;
+  color: red;
+  position: fixed;
+  border-radius: 50%;
+  right: 20px;
+  bottom: 50%;
+}

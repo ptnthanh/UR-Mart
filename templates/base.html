@@ -6,19 +6,11 @@
 {{ super() }}
 <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
 <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 {% endblock %}
 
 {% block navbar %}
-<style>
-  .dropdown:hover .dropdown-menu {
-   display: block !important;
- }
 
- .dropdown-menu {
-  min-width: 0;
-  width: 100%;
-}
-</style>
 <div class="navbar navbar-inverse" role="navigation">
   <div class="container">
     <div class="navbar-header">
