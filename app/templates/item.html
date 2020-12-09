@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+<!-- {% import "bootstrap/wtf.html" as wtf %} -->
+{% block page_content %}
+<div class="page-header">
+    <span style="font-size: 24px!important; line-height: 32px!important;">{{item.title}}</span><br>
+    <ul class="list-inline">
+        <li><a href="{{url_for(category)}}">{{item.category}}</a></li>
+        <li>></li>
+        <li><a href="{{url_for(subcategory)}}">{{item.subcategory}}</a></li>
+    </ul>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-5">
+            <a href="{{item.imgLink}}" target="_blank" rel="noopener noreferrer">
+                <img src="{{item.imgLink}}" style="width:450px; height:350px" alt="">
+            </a><br><br>
+            <p style="text-align: center;">Click on image to open in new tab</p>
+        </div>
+        <div class="col-md-5">
+            {% if item.stockAmount != 0  %}
+            <h3 style="color:green;"><b>In Stock: {{item.stockAmount}}</b></h3>
+            {% else %}
+            <h3 style="color:red;"><b>Out of Stock</b></h3>
+            {% endif %}
+            <h4><b>Price: </b>${{item.originalPrice}}</h4>
+            <h4><b>Brand: </b><a href="{{url_for('app.index', brand=item.brand)}}">{{item.brand}}</a></h4>
+            <h4><b>SKU: </b>{{item.SKU}}</h4>
+            <h3><b>About This Item: </b></h3>
+            <ul>
+                {% for string in strings %}
+                {% if string != ""  %}
+                <li>{{string}}</li>
+                {% endif %}
+                {% endfor %}
+            </ul>
+            <a href="#" class="btn btn-primary">
+                <span class="glyphicon glyphicon-shopping-cart"></span> <b>Add To Cart</b>
+            </a>
+        </div>
+    </div>        
+</div>
+{% endblock %}

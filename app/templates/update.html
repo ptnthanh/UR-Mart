@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+<!-- {% import "bootstrap/wtf.html" as wtf %} -->
+{% block page_content %}
+<div class="page-header">
+    <h1><b>Update Product Listing:</b></h1>
+</div>
+<div class="container">
+    <div class="container">
+     <form action="{{url_for('app.update', SKU=update.SKU)}}" METHOD="POST">
+      <div class="form-group">
+        <label for="title">Product Title: </label>
+        <input type="text" class="form-control" id="title" name="title" placeholder="{{update.title}}" value="{{update.title}}">
+    </div>
+    <div class="form-group">
+     <label for="brand">Product Brand: </label>
+     <input type="text" class="form-control" id="brand" name="brand" placeholder="{{update.brand}}" value="{{update.brand}}">
+ </div>
+ <div class="form-group">
+    <label for="category">Product Category: </label>
+    <input type="text" class="form-control" id="category" name="category" placeholder="{{update.category}}" value="{{update.category}}">
+</div>
+<div class="form-group">
+ <label for="subcategory">Product Sub-category: </label>
+ <input type="text" class="form-control" id="subcategory" name="subcategory" placeholder="{{update.subcategory}}" value="{{update.subcategory}}">
+</div>
+<div class="form-group">
+    <label for="SKU">SKU: </label>
+    <input type="text" class="form-control" id="SKU" name="SKU" placeholder="{{update.SKU}}" value="{{update.SKU}}">
+</div>
+<div class="form-group">
+    <label for="amount">In Stock: </label>
+    <input type="number" class="form-control" id="amount" name="amount" placeholder="{{update.stockAmount}}" value="{{update.stockAmount}}">
+</div>
+<div class="form-group">
+    <label for="price">Original Price: </label>
+    <input type="number" step="any" class="form-control" id="price" name="price" placeholder="{{update.originalPrice}}" value="{{update.originalPrice}}">
+</div>
+<div class="form-group">
+    <label for="link">Image Link: </label>
+    <input type="text" class="form-control" id="link" name="link" placeholder="{{update.imgLink}}" value="{{update.imgLink}}">
+</div>
+<div class="form-group">
+ <label for="description">Item Description (Type "(*)" to make a list item bullet): </label>
+ <textarea class="form-control" rows="20" cols="50" id="description" name="description" placeholder="{{update.description}}">{{update.description}}</textarea>
+</div>
+<button type="submit" class="btn btn-primary">Submit</button>
+</form>
+</div>
+</div>
+{% endblock %}

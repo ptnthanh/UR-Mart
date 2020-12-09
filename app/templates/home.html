@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block head %}
+{{ super() }}
+
+{% endblock %}
+
+{% block page_content %}
+<a href="#cart">
+	<button id="floating-cart">
+		<span class="glyphicon glyphicon-shopping-cart"></span>
+		<b id="cart-count">0</b>
+	</button>
+</a>
+
+<div class="page-header">
+	<div class="jumbotron jumbotron-fluid">
+		<h1>Welcome to UR-Mart!</h1>
+	</div>
+</div>
+<div class="container">
+	<form action="{{url_for(function)}}" class="form-inline" METHOD="POST">
+		<div class="form-group">
+			<label for="filter">Sort By: </label>
+			<select style="width:200px;" selected="{{filter_by}}" class="form-control" id="filter" name="filter">
+				<option>{{filter_by}}</option>
+				{% for filter in filters %}
+				{% if filter != filter_by  %}
+				<option>{{filter}}</option>
+				{% endif %}
+				{% endfor %}
+			</select>
+		</div>
+		<div class="form-group">
+			<label for="brand" style="margin-left:25px;">Brand: </label>
+			<select style="width:200px;" selected="{{brand}}" class="form-control" id="brand" name="brand">
+				<option>{{brand}}</option>
+				{% if brand != "All"  %}
+				<option>All</option>
+				{% endif %}
+				{% for item in brands %}
+				{% if item != brand  %}
+				<option>{{item}}</option>
+				{% endif %}
+				{% endfor %}
+			</select>
+		</div>
+		<button type="submit" class="btn btn-primary">Submit</button>
+	</form>
+</div>
+<br>
+<div class="container">
+	<div class="row">
+		{% for product in products %}
+		<div class="col-md-4">
+			<div class="thumbnail">
+				<img class="shop-item-image" src="{{product.imgLink}}" style="width:350px;height:250px;">
+				<div class="caption">
+					<b class="shop-item-title">{{product.title}}</b>
+				</div>
+				<p class="shop-item-price">${{product.originalPrice}}</p>
+				<button class="shop-item-button btn btn-primary">
+					<span class="glyphicon glyphicon-shopping-cart"></span>	<b>Add To Cart</b>
+				</button>
+				<a href="{{url_for('app.item', SKU=product.SKU)}}" class="btn btn-default">
+					<span class="glyphicon glyphicon-th-list"></span>	<b>Details</b>
+				</a>
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+</div>
+
+<section id="cart" class="container content-section">
+	<h1 class="section-header">CART</h1>
+	<div class="cart-row">
+		<span class="cart-item cart-header cart-column">ITEM</span>
+		<span class="cart-price cart-header cart-column">PRICE</span>
+		<span class="cart-quantity cart-header cart-column">QUANTITY</span>
+	</div>
+	<div class="cart-items">
+	</div>
+	<div class="cart-total">
+		<strong class="cart-total-title">Total</strong>
+		<span class="cart-total-price">$0</span>
+	</div>
+	<button class="btn btn-primary btn-purchase" type="button">PURCHASE</button>
+</section>
+
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="{{ url_for('static', filename='scripts.js') }}"></script>
+{% endblock %}
