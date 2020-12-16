@@ -1,29 +1,18 @@
-# CSC-210-Final-Project-UR-Mart
+# UR-Mart
 
-1. Our Plan:
-We plan to build an online shopping application called UrMart, similar to Amazon or
+urmart.herokuapp.com
+
+We plan to build an online shopping application called UR Mart, similar to Amazon or
 eBay. Our target audience are independent online merchants who sell products
 alongside customers who seek products unavailable on more popular sites.
 Our application will include these features listed below: <br>
 ● Using Flask as our web framework.<br>
-● Deployed on Digital Scholars.<br>
+● Deployed on Heroku.<br>
 ● Product database with vital data (e.g. SKU, Brand Name, Origin, etc,...).<br>
-● User Authentication for sellers and buyers.<br>
+● User Authentication for sellers.<br>
 ● Sellers can use CRUD functions on products (e.g. create new products, delete
 existing ones,...).<br>
-● Buyers can add items to cart, rate products, pay sellers through store credit (no
-REAL payment charged).<br>
-More features or functionalities might be added as we work on this project - all of which
-will be properly documented/reported.
-
-2. Our Team:
-Duy Pham will gather data to create a product database, then handle database
-queries/functions later on.
-Thanh Pham will handle CRUD functions for sellers.
-Hung Tran will handle buyers’ functions such as shopping cart, ratings, or store credits.
-All of us will work together on front-end as well as user authentication.
-Changes to work assignment might happen as we work on this project - all of which will
-be properly documented/reported.
+● Buyers can add items to cart and check out (no REAL payment charged).<br>
 
 
 
